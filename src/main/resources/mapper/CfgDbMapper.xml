@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asura.ops.sync.server.mapper.CfgDbMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.asura.ops.sync.server.model.entity.CfgDbEntity">
+        <id column="id" property="id" />
+        <result column="db_host" property="dbHost" />
+        <result column="db_port" property="dbPort" />
+        <result column="db_user" property="dbUser" />
+        <result column="db_pwd" property="dbPwd" />
+        <result column="db_server_id" property="dbServerId" />
+        <result column="created_by" property="createdBy" />
+        <result column="created_name" property="createdName" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_by" property="updatedBy" />
+        <result column="updated_name" property="updatedName" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="rowversion" property="rowversion" />
+    </resultMap>
+
+</mapper>

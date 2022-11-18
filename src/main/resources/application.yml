@@ -1,0 +1,37 @@
+app:
+  id: asura-ops-sync-server
+apollo:
+  bootstrap:
+    enabled: true
+    eagerLoad:
+      enabled: true
+    namespaces: application,Java.asura.common
+spring:
+  profiles:
+    active: test
+sync:
+  server:
+    code: mdm
+
+---
+#development environment
+spring:
+  profiles: dev
+apollo:
+  meta: http://dev.config-service.ruigushop.com
+  cacheDir: config
+
+---
+#test environment
+spring:
+  profiles: test
+apollo:
+  meta: http://test.config-service.ruigushop.com
+  cacheDir: config
+---
+#production environment
+spring:
+  profiles: pro
+apollo:
+  meta: http://config-service.ruigushop.internal
+  cacheDir: config

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asura.ops.sync.server.mapper.CfgClientMapper">
+
+    <resultMap id="BaseResultMap" type="com.asura.ops.sync.server.model.entity.CfgClientEntity">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="clientCode" column="client_code" jdbcType="VARCHAR"/>
+            <result property="clientName" column="client_name" jdbcType="VARCHAR"/>
+            <result property="clientNameCh" column="client_name_ch" jdbcType="VARCHAR"/>
+            <result property="syncTableId" column="sync_table_id" jdbcType="BIGINT"/>
+            <result property="clientTableName" column="client_table_name" jdbcType="VARCHAR"/>
+            <result property="createdBy" column="created_by" jdbcType="BIGINT"/>
+            <result property="createdName" column="created_name" jdbcType="VARCHAR"/>
+            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+            <result property="updatedBy" column="updated_by" jdbcType="BIGINT"/>
+            <result property="updatedName" column="updated_name" jdbcType="VARCHAR"/>
+            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,client_code,client_name,
+        client_name_ch,sync_table_id,client_table_name,
+        created_by,created_name,created_at,
+        updated_by,updated_name,updated_at,
+        rowversion
+    </sql>
+
+    <resultMap id="cfgClientDto" type="com.asura.ops.sync.api.model.CfgClientDto">
+        <result column="client_code" property="clientCode"/>
+        <result column="client_name" property="clientName"/>
+        <collection property="cfgClientMqDtoList" ofType="com.asura.ops.sync.api.model.CfgClientMqDto">
+            <result column="exchange_name" property="exchangeName"/>
+            <result column="route_key" property="routeKey"/>
+            <result column="queue_name" property="queueName"/>
+            <result column="table_name" property="syncTableName"/>
+            <result column="client_table_name" property="clientTableName"/>
+        </collection>
+    </resultMap>
+
+    <select id="getCfgClientList" resultMap="cfgClientDto">
+        SELECT
+            t1.client_code,
+            t1.client_name,
+            t1.client_table_name,
+            t2.exchange_name,
+            t2.route_key,
+            t2.queue_name,
+            t3.table_name
+        FROM
+            cfg_client t1
+                LEFT JOIN cfg_mq t2 ON t2.sync_client_id = t1.id
+                LEFT JOIN cfg_table t3 ON t3.id = t2.sync_table_id
+        WHERE
+            <foreach collection="clientCodes" item="clientCode" open=" t1.client_code IN(" separator="," close=")">
+                #{clientCode}
+            </foreach>
+    </select>
+</mapper>

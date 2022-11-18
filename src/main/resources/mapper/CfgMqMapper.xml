@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asura.ops.sync.server.mapper.CfgMqMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.asura.ops.sync.server.model.entity.CfgMqEntity">
+        <id column="id" property="id"/>
+        <result column="sync_table_id" property="syncTableId"/>
+        <result column="sync_client_id" property="syncClientId"/>
+        <result column="exchange_name" property="exchangeName"/>
+        <result column="route_key" property="routeKey"/>
+        <result column="queue_name" property="queueName"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_name" property="createdName"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_name" property="updatedName"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="rowversion" property="rowversion"/>
+    </resultMap>
+
+    <select id="queryDBForMq" resultType="com.asura.ops.sync.server.model.entity.CfgDbEntity">
+        SELECT
+        d.*
+        FROM
+        cfg_mq mq,
+        cfg_table t,
+        cfg_server_db sd,
+        cfg_server s,
+        cfg_db d
+        WHERE
+        mq.id = #{mqEntity.id}
+        AND t.id = mq.sync_table_id
+        AND sd.id = t.cfg_server_db_id
+        AND s.id = sd.cfg_server_id
+        AND d.id = s.cfg_db_id
+    </select>
+
+</mapper>

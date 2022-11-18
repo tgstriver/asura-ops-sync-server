@@ -10,11 +10,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.asura</groupId>
     <artifactId>asura-ops-sync-server</artifactId>
-    <name>asura-ops-sync-server</name>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
